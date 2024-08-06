@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/category_view.dart';
+import 'package:inventory_app/product_store.dart';
 import 'package:inventory_app/side_drawer.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -10,6 +12,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //fetch the data using initstate
+  @override
+  void initState() {
+    Provider.of<ProductStore>(context, listen: false).fetchProductsOnce();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

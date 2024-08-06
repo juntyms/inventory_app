@@ -12,20 +12,23 @@ class FirestoreService {
   // Add new product
   static Future<void> addProduct(Product product) async {
     await ref.doc(product.id).set(product);
-
-    // try {
-    //   print('Attempting to add product: ${product.id}');
-    //   await ref.doc(product.id).set(product);
-    //   print('Product added successfully: ${product.id}');
-    // } catch (e) {
-    //   print('Error adding product to Firestore: $e');
-    //   rethrow; // Rethrow if you want to handle it further up the call stack
-    // }
   }
 
   // get all products
+  static Future<QuerySnapshot<Product>> getProductsOnces() {
+    return ref.get();
+  }
 
   //update product
+  static Future<void> updateProduct(Product product) async {
+    await ref.doc(product.id).update({
+      'name': product.name,
+      'qty': product.qty,
+    });
+  }
 
   //delete product
+  static Future<void> deleteProduct(Product product) async {
+    await ref.doc(product.id).delete();
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/product_model.dart';
+import 'package:inventory_app/product_store.dart';
+import 'package:provider/provider.dart';
 //import 'package:inventory_app/inventory_data.dart';
 
 class ProductSingleView extends StatefulWidget {
@@ -74,7 +76,7 @@ class _ProductSingleViewState extends State<ProductSingleView> {
   //       isFav: widget.product.isFav));
   // }
 
-  // Update the product list
+  //Update the product list
   // void updateProduct() {
   //   int index =
   //       products.indexWhere((product) => product.id == widget.product.id);
@@ -86,6 +88,13 @@ class _ProductSingleViewState extends State<ProductSingleView> {
   //     });
   //   }
   // }
+  void updateProduct() {
+    widget.product.name = _productNameController.text.trim();
+    widget.product.qty = _productQty;
+
+    Provider.of<ProductStore>(context, listen: false)
+        .updateProduct(widget.product);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +214,8 @@ class _ProductSingleViewState extends State<ProductSingleView> {
                             TextButton(
                               onPressed: () {
                                 _formKey.currentState!.validate();
-                                //_saveProduct();
-                                //updateProduct();
+
+                                updateProduct();
 
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
@@ -217,9 +226,7 @@ class _ProductSingleViewState extends State<ProductSingleView> {
                                 ));
 
                                 //Navigator.pop(context);
-                                Navigator.of(context)
-                                  ..pop()
-                                  ..pop();
+                                Navigator.of(context).pop();
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(

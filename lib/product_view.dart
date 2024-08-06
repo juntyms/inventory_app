@@ -161,72 +161,79 @@ class _ProductViewState extends State<ProductView> {
               productName = product.name;
             }
 
-            return Container(
-              height: 250,
-              width: double.maxFinite,
-              margin: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage('assets/${product.image}'),
-                  fit: BoxFit.cover,
+            return Dismissible(
+              key: ValueKey(product.id),
+              onDismissed: (direction) {
+                Provider.of<ProductStore>(context, listen: false)
+                    .deleteProduct(product);
+              },
+              child: Container(
+                height: 250,
+                width: double.maxFinite,
+                margin: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage('assets/${product.image}'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              child: Card(
-                color: Colors.transparent,
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.favorite_outline_rounded,
-                        color: Colors.red),
-                    const Expanded(
-                      child: SizedBox(
-                        height: 10,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductSingleView(
-                              product: product,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        color: const Color.fromRGBO(1, 2, 3, 0.39),
-                        child: Column(
-                          children: [
-                            Text(
-                              productName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Qty : ${product.qty}',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const Expanded(
-                                    child: SizedBox(
-                                  width: 20,
-                                )),
-                              ],
-                            ),
-                          ],
+                child: Card(
+                  color: Colors.transparent,
+                  elevation: 0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.favorite_outline_rounded,
+                          color: Colors.red),
+                      const Expanded(
+                        child: SizedBox(
+                          height: 10,
                         ),
                       ),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductSingleView(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: const Color.fromRGBO(1, 2, 3, 0.39),
+                          child: Column(
+                            children: [
+                              Text(
+                                productName,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Qty : ${product.qty}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Expanded(
+                                      child: SizedBox(
+                                    width: 20,
+                                  )),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
