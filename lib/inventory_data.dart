@@ -1,5 +1,4 @@
 import 'package:inventory_app/category_model.dart';
-import 'package:inventory_app/product_model.dart';
 
 List<Category> categories = [
   Category(

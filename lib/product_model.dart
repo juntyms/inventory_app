@@ -21,7 +21,7 @@ class Product {
 // product to firestore
   Map<String, dynamic> toFirestore() {
     return {
-      'categoryid': categoryId,
+      'categoryId': categoryId,
       'name': name,
       'qty': qty,
       'image': image,

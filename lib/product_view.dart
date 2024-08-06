@@ -48,7 +48,7 @@ class _ProductViewState extends State<ProductView> {
       categoryId: widget.category.id,
       name: productNameController.text.trim(),
       qty: int.parse(productQtyController.text.trim()),
-      image: 'image.jpg',
+      image: 'products/lg.png',
       isFav: false,
     ));
   }
@@ -82,6 +82,7 @@ class _ProductViewState extends State<ProductView> {
               ),
               TextFormField(
                 controller: productQtyController,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: 'Product Qty',
                   border: OutlineInputBorder(),

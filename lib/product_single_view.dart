@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/product_model.dart';
-import 'package:inventory_app/inventory_data.dart';
+//import 'package:inventory_app/inventory_data.dart';
 
 class ProductSingleView extends StatefulWidget {
   const ProductSingleView({required this.product, super.key});

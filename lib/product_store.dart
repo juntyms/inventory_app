@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_app/firestore_service.dart';
 import 'package:inventory_app/product_model.dart';
 
 class ProductStore extends ChangeNotifier {
@@ -116,7 +117,18 @@ class ProductStore extends ChangeNotifier {
   }
 
   // Add Product then edit the product view create product that pass the value here
-  void addProduct(Product product) {
+  void addProduct(Product product) async {
+    // Add this only after adding the add product from firestore_service
+    await FirestoreService.addProduct(product);
+    // try {
+    //   await FirestoreService.addProduct(product);
+    //   _products.add(product);
+    //   notifyListeners(); // to update the builders
+    // } catch (e) {
+    //   print('Error adding product: $e');
+    //   // Handle any errors here (e.g., show a user-friendly message)
+    // }
+
     _products.add(product);
     notifyListeners(); // to update the builders
   }
