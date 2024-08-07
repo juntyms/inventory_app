@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/category_model.dart';
+import 'package:inventory_app/product_create.dart';
 //import 'package:inventory_app/inventory_data.dart';
-import 'package:inventory_app/product_model.dart';
+//import 'package:inventory_app/product_model.dart';
 import 'package:inventory_app/product_single_view.dart';
 import 'package:inventory_app/product_store.dart';
 import 'package:provider/provider.dart';
@@ -19,108 +20,10 @@ class ProductView extends StatefulWidget {
 }
 
 class _ProductViewState extends State<ProductView> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController productNameController = TextEditingController();
-  final TextEditingController productQtyController = TextEditingController();
-
-  void submitForm() {
-    if (productNameController.text.trim().isEmpty) {
-      //show error
-    }
-
-    if (productQtyController.text.trim().isEmpty) {
-      //show error
-    }
-
-    //Transfer this to the provider below
-    // products.add(Product(
-    //   id: uuid.v4(),
-    //   categoryId: widget.category.id,
-    //   name: productNameController.text.trim(),
-    //   qty: int.parse(productQtyController.text.trim()),
-    //   image: 'image.jpg',
-    //   isFav: false,
-    // )); // after this install flutter pub add provider then create product_store.dart
-
-    // Add this and comment above
-    Provider.of<ProductStore>(context, listen: false).addProduct(Product(
-      id: uuid.v4(),
-      categoryId: widget.category.id,
-      name: productNameController.text.trim(),
-      qty: int.parse(productQtyController.text.trim()),
-      image: 'products/lg.png',
-      isFav: false,
-    ));
-  }
-
-  void openProductForm() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add Product'),
-        content: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: productNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Product Name',
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '* This field should not be empty';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: productQtyController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Product Qty',
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '* This field should not be empty';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              submitForm();
-              Navigator.pop(context);
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     //  final categoryProducts = getProductsByCategory(widget.category.id); // Comment this out when adding builder transfer it in body
+    final int categoryId = widget.category.id;
 
     return Scaffold(
       appBar: AppBar(
@@ -131,7 +34,13 @@ class _ProductViewState extends State<ProductView> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => openProductForm(),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductCreate(categoryId: categoryId)),
+          );
+        },
         backgroundColor: Colors.pink[300],
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
@@ -174,8 +83,9 @@ class _ProductViewState extends State<ProductView> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: AssetImage('assets/${product.image}'),
-                    fit: BoxFit.cover,
+                    //image: AssetImage('assets/${product.image}'),
+                    image: NetworkImage(product.image),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Card(

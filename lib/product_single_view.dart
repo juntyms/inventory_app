@@ -125,7 +125,8 @@ class _ProductSingleViewState extends State<ProductSingleView> {
                 children: [
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: Image.asset("assets/${widget.product.image}",
+                      //child: Image.asset("assets/${widget.product.image}",
+                      child: Image.network(widget.product.image,
                           fit: BoxFit.cover)),
                   Positioned(
                     bottom: 10.0,
