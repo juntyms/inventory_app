@@ -24,7 +24,7 @@ class ProductStore extends ChangeNotifier {
     notifyListeners(); // to update the builders
   }
 
-  // fetch products
+  // fetch products - when using firebase add this to init state in my_homepage
   void fetchProductsOnce() async {
     if (products.length == 0) {
       final snapshot = await FirestoreService.getProductsOnces();
